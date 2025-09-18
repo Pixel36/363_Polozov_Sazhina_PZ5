@@ -7,7 +7,7 @@ import (
 
 func longRequest(result chan<- string) {
  time.Sleep(3 * time.Second)
- result <- "Ответ от сервера"
+ result <- "Ответ сервера"
 }
 
 func main() {
@@ -19,6 +19,6 @@ func main() {
  case r := <-result:
   fmt.Println("Получено:", r)
  case <-time.After(2 * time.Second):
-  fmt.Println("Таймаут: сервер не ответил за 2 секунды")
+  fmt.Println("Сервер не ответил за 2 секунды")
  }
 }

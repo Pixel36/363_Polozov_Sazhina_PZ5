@@ -10,15 +10,11 @@ type Job struct {
 }
 
 func rabota(high <-chan Job, low <-chan Job) {
- for {
-  select {
-  case j := <-high:
-   fmt.Println("важный джоб:", j.Name)
-  case j := <-low:
-   fmt.Println("джоб поменьбше:", j.Name)
-  default:
-   time.Sleep(100 * time.Millisecond)
-  }
+ for (len(high)>0) {
+  fmt.Println(<-high)
+ }
+ for (len(low)>0) {
+ fmt.Println(<-low)
  }
 }
 
@@ -28,11 +24,11 @@ func main() {
 
  go rabota(high, low)
 
- low <- Job{"п-1"}
- low <- Job{"п-2"}
- high <- Job{"в-1"}
- low <- Job{"п-3"}
- high <- Job{"в-2"}
+ low <- Job{"джоб поменьбше-1"}
+ low <- Job{"джоб поменьбше-2"}
+ high <- Job{"важный джоб-1"}
+ low <- Job{"джоб поменьбше-3"}
+ high <- Job{"важный джоб-2"}
 
  time.Sleep(1 * time.Second)
 }
